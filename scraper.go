@@ -299,6 +299,9 @@ func crawlROMs(ctx context.Context, gl *rom.GameListXML, sources []ds.DS, xmlOpt
 			if fi.IsDir() {
 				return nil
 			}
+			if filepath.Dir(f) != xmlOpts.RomDir {
+				return nil
+			}
 			r, err := rom.NewROM(f)
 			if err != nil {
 				log.Printf("ERR: Processing: %s, %s", f, err)
@@ -337,6 +340,9 @@ func crawlROMs(ctx context.Context, gl *rom.GameListXML, sources []ds.DS, xmlOpt
 			return nil
 		}
 		if fi.IsDir() {
+			return nil
+		}
+		if filepath.Dir(f) != xmlOpts.RomDir {
 			return nil
 		}
 		if filepath.Ext(f) == ".daphne" {
